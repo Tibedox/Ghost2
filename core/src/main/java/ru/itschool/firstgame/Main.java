@@ -11,12 +11,8 @@ public class Main extends ApplicationAdapter {
     private SpriteBatch batch;
     private Texture imgGhost;
     private Texture imgBackGround;
-    int width = 200;
-    int height = 300;
-    int x = 0;
-    int y = 0;
-    int vx = 10;
-    int vy = 5;
+    Ghost ghost1;
+    Ghost ghost2;
 
     // Подготвка. Вызывается 1 раз
     @Override
@@ -24,28 +20,26 @@ public class Main extends ApplicationAdapter {
         batch = new SpriteBatch();
         imgGhost = new Texture("ghost.png");
         imgBackGround = new Texture("grave.jpg");
+        ghost1 = new Ghost();
+        ghost1.x = 111;
+
+        ghost2 = new Ghost();
+        ghost2.vx  = 15;
     }
 
     // Игровой цикл (отображение, получение данных от пользоваиеля, обработка). Бесконечное кол-во раз
     @Override
     public void render() {
         // события игры
-        x += vx;
-        y += vy;
-        /*if(x>SCR_WIDTH) x=-width;
-        if(y>SCR_HEIGHT) y=-height;*/
-        if(x>SCR_WIDTH-width || x<0) {
-            vx = -vx;
-        }
-        if(y>SCR_HEIGHT-height || y<0) {
-            vy = -vy;
-        }
+        ghost1.move();
+        ghost2.move();
 
         // отрисовка
         ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
         batch.begin();
         batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
-        batch.draw(imgGhost, x, y, width, height);
+        batch.draw(imgGhost, ghost1.x, ghost1.y, ghost1.width, ghost1.height);
+        batch.draw(imgGhost, ghost2.x, ghost2.y, ghost2.width, ghost2.height);
         batch.end();
     }
 
