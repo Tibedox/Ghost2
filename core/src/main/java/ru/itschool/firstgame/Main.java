@@ -1,9 +1,11 @@
 package ru.itschool.firstgame;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.Gdx;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
+import com.badlogic.gdx.math.Vector3;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
@@ -11,9 +13,10 @@ public class Main extends ApplicationAdapter {
 
     private SpriteBatch batch;
     OrthographicCamera camera;
+    Vector3 tap;
     private Texture imgGhost;
     private Texture imgBackGround;
-    int ghostCount = 150;
+    int ghostCount = 20;
     Ghost[] ghosts = new Ghost[ghostCount];
 
     // Подготвка. Вызывается 1 раз
@@ -21,6 +24,7 @@ public class Main extends ApplicationAdapter {
     public void create() {
         camera = new OrthographicCamera();
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
+        tap = new Vector3();
         batch = new SpriteBatch();
         imgGhost = new Texture("ghost.png");
         imgBackGround = new Texture("grave.jpg");
@@ -32,6 +36,17 @@ public class Main extends ApplicationAdapter {
     // Игровой цикл (отображение, получение данных от пользоваиеля, обработка). Бесконечное кол-во раз
     @Override
     public void render() {
+        // обработка касаний
+        if(Gdx.input.justTouched()){
+            tap.set(Gdx.input.getX(), Gdx.input.getY(), 0);
+            camera.unproject(tap);
+            for (int i = 0; i < ghostCount; i++) {
+                if(ghosts[i].isTapped(tap.x, tap.y)){
+                    System.out.println("tapped");
+                }
+            }
+        }
+
         // события игры
         for (int i = 0; i < ghostCount; i++) {
             Ghost ghost = ghosts[i];

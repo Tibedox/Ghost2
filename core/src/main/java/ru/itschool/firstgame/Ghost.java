@@ -14,9 +14,9 @@ public class Ghost {
     float vy;
 
     Ghost(){
-        vx = MathUtils.random(-10F, 10F);
-        vy = MathUtils.random(-10F, 10F);
-        width = MathUtils.random(10, 100);
+        vx = MathUtils.random(-8F, 8F);
+        vy = MathUtils.random(-8F, 8F);
+        width = MathUtils.random(50, 100);
         height = width / 0.8F;
     }
 
@@ -32,4 +32,22 @@ public class Ghost {
             vy = -vy;
         }
     }
+
+    boolean isTapped(float tapX, float tapY) {
+        if (x < tapX && tapX < x+width && y < tapY && tapY < y+height){
+            return true;
+        } else {
+            return false;
+        }
+    }
 }
+
+
+
+
+
+
+
+
+
+
