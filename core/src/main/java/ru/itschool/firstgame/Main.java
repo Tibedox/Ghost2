@@ -42,7 +42,7 @@ public class Main extends ApplicationAdapter {
             camera.unproject(tap);
             for (int i = 0; i < ghostCount; i++) {
                 if(ghosts[i].isTapped(tap.x, tap.y)){
-                    System.out.println("tapped");
+                    ghosts[i].isAlive = false;
                 }
             }
         }
@@ -50,7 +50,9 @@ public class Main extends ApplicationAdapter {
         // события игры
         for (int i = 0; i < ghostCount; i++) {
             Ghost ghost = ghosts[i];
-            ghost.move();
+            if (ghost.isAlive){
+                ghost.move();
+            }
         }
 
         // отрисовка

@@ -12,6 +12,7 @@ public class Ghost {
     float y = 0;
     float vx;
     float vy;
+    boolean isAlive = true;
 
     Ghost(){
         vx = MathUtils.random(-8F, 8F);
