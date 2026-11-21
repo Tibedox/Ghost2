@@ -2,6 +2,7 @@ package ru.itschool.firstgame;
 
 import com.badlogic.gdx.ApplicationAdapter;
 import com.badlogic.gdx.Gdx;
+import com.badlogic.gdx.audio.Sound;
 import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
@@ -16,6 +17,7 @@ public class Main extends ApplicationAdapter {
     Vector3 tap;
     private Texture imgGhost;
     private Texture imgBackGround;
+    Sound sndDeath;
     int ghostCount = 20;
     Ghost[] ghosts = new Ghost[ghostCount];
 
@@ -26,8 +28,11 @@ public class Main extends ApplicationAdapter {
         camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         tap = new Vector3();
         batch = new SpriteBatch();
+
         imgGhost = new Texture("ghost.png");
         imgBackGround = new Texture("grave.jpg");
+        sndDeath = Gdx.audio.newSound(Gdx.files.internal("man_death_01.ogg"));
+
         for (int i = 0; i < ghostCount; i++) {
             ghosts[i] = new Ghost();
         }
@@ -43,6 +48,7 @@ public class Main extends ApplicationAdapter {
             for (int i = 0; i < ghostCount; i++) {
                 if(ghosts[i].isTapped(tap.x, tap.y)){
                     ghosts[i].isAlive = false;
+                    sndDeath.play();
                 }
             }
         }
