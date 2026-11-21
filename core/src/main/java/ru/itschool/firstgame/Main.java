@@ -1,22 +1,26 @@
 package ru.itschool.firstgame;
 
 import com.badlogic.gdx.ApplicationAdapter;
+import com.badlogic.gdx.graphics.OrthographicCamera;
 import com.badlogic.gdx.graphics.Texture;
 import com.badlogic.gdx.graphics.g2d.SpriteBatch;
 import com.badlogic.gdx.utils.ScreenUtils;
 
 public class Main extends ApplicationAdapter {
-    public static final int SCR_WIDTH = 1600, SCR_HEIGHT = 900;
+    public static final int SCR_WIDTH = 1280, SCR_HEIGHT = 720;
 
     private SpriteBatch batch;
+    OrthographicCamera camera;
     private Texture imgGhost;
     private Texture imgBackGround;
-    int ghostCount = 400;
+    int ghostCount = 150;
     Ghost[] ghosts = new Ghost[ghostCount];
 
     // Подготвка. Вызывается 1 раз
     @Override
     public void create() {
+        camera = new OrthographicCamera();
+        camera.setToOrtho(false, SCR_WIDTH, SCR_HEIGHT);
         batch = new SpriteBatch();
         imgGhost = new Texture("ghost.png");
         imgBackGround = new Texture("grave.jpg");
@@ -33,13 +37,10 @@ public class Main extends ApplicationAdapter {
             Ghost ghost = ghosts[i];
             ghost.move();
         }
-        for (int i = 0; i < ghostCount; i++) {
-            ghosts[i].move();
-        }
-
 
         // отрисовка
-        ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        //ScreenUtils.clear(0.15f, 0.15f, 0.2f, 1f);
+        batch.setProjectionMatrix(camera.combined);
         batch.begin();
         batch.draw(imgBackGround, 0, 0, SCR_WIDTH, SCR_HEIGHT);
         for (int i = 0; i < ghostCount; i++) {
