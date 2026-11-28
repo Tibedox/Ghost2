@@ -31,7 +31,7 @@ public class Main extends ApplicationAdapter {
 
         imgGhost = new Texture("ghost.png");
         imgBackGround = new Texture("grave.jpg");
-        sndDeath = Gdx.audio.newSound(Gdx.files.internal("man_death_01.ogg"));
+        sndDeath = Gdx.audio.newSound(Gdx.files.internal("sound/man_death_01.ogg"));
 
         for (int i = 0; i < ghostCount; i++) {
             ghosts[i] = new Ghost();
